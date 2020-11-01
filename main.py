@@ -4,6 +4,7 @@ from time import sleep
 from video_controller import VideoPlayer 
 from secret_sanitizer import sanitize_url
 import requests
+import traceback
 '''
 Useful props:
 
@@ -66,6 +67,7 @@ def main():
         try:
             results = api.get_new_mentions()
         except:
+            traceback.print_exc()
             print("API Request failed. Trying again...")
             print("If this keeps happening, login may be failing.")
         if results:
