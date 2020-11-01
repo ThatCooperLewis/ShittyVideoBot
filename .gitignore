@@ -1,0 +1,21 @@
+# Contains sanitize_url(raw_text: str, expected_domain: str) 
+# and returns the sanitized url string, or None if invalid.
+# Hidden for the 0.001% chance someone tries reverse-engineering 
+# it for whatever reason, ain't nobody got time for that .
+secret_sanitizer.py
+
+# Contains credentials for Twitter Dev account
+twitter_auth.txt
+
+# Python stuff
+__pycache__
+venv
+
+# Build directories
+build
+dist
+*.spec
+
+# Caching
+latest.tweet
+queue.tweet
