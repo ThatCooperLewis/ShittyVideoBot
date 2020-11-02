@@ -86,13 +86,11 @@ def main():
                     print(text)
                     for good_url in ['youtube.com', 'youtu.be', 't.co']:
                         if good_url in text:
-                            print("got good url")
                             try:
                                 # Clean tweet with secret sauce
                                 url = sanitize_url(text, good_url)
                                 # Video must meet certain content criteria
                                 if video.is_valid(url):
-                                    print("video is valid")
                                     video.playlist.add_to_queue(url)
                                     if not video.is_playing():
                                         video.play_next_if_ready()
@@ -105,7 +103,7 @@ def main():
         try:
             sleep(1)
             video.play_next_if_ready()
-            sleep(10)
+            sleep(12)
         except KeyboardInterrupt:
             return
         except:
