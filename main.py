@@ -63,13 +63,21 @@ def main():
     api = TwitterAPI()
     video = VideoPlayer()
     print("Bot is ready. Searching for tweets...")
+    retry = False
     while True:
         try:
             results = api.get_new_mentions()
         except:
-            traceback.print_exc()
-            print("API Request failed. Trying again...")
-            print("If this keeps happening, login may be failing.")
+            if not retry:
+                print("Api request error. Waiting 30s to request again..")
+                retry = True
+                sleep(30)
+                continue
+            else:
+                traceback.print_exc()
+                print("API Request failed. Trying again...")
+                print("If this keeps happening, login may be failing.")
+        retry = False
         if results:
             for status in results:
                 try:
@@ -97,7 +105,7 @@ def main():
         try:
             sleep(1)
             video.play_next_if_ready()
-            sleep(8)
+            sleep(10)
         except KeyboardInterrupt:
             return
         except:
