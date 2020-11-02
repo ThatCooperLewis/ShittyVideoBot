@@ -74,6 +74,11 @@ class VideoPlayer:
             if self.almost_over():
                 sleep(5)
                 self.player.stop()
+            # Hide taskbar when viewing desktop
+            pyautogui.click(x=100, y=100)
+            return
+        if not self.is_playing():
+            pyautogui.click(x=100, y=100)
             return
         if self.player and not self.almost_over(): return
         self.play_url(self.playlist.get_next())
