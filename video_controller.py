@@ -68,7 +68,9 @@ class VideoPlayer:
             duration = self.player.get_time()
             if length - duration <= 10000:
                 return True
-        return False
+            else: 
+                return False
+        return True
 
     def play_next_if_ready(self):
         debug("Triggered play next")
@@ -78,8 +80,8 @@ class VideoPlayer:
                 sleep(5)
                 self.player.stop()
             return
-        if (self.player and not self.almost_over()) or not self.is_playing():
-            debug("Player not setup or video isn't over. Skipping playback of next video (for now)") 
+        if self.is_playing():
+            debug("Video isn't over. Skipping play_next") 
             return
         self.play_url(self.playlist.get_next())
 
