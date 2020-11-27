@@ -72,7 +72,7 @@ def main():
                 print("API Request failed. Trying again...")
                 print("If this keeps happening, login may be failing.")
         retry = False
-        if results:
+        if results and len(results) > 0:
             debug("starting results parse..")
             for status in results:
                 try:
