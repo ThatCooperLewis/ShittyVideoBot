@@ -3,7 +3,7 @@ import vlc
 import pafy
 import pyautogui
 from time import sleep
-from main import debug
+from debug_tool import debug
 
 class VideoPlaylist:
 

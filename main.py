@@ -3,14 +3,10 @@ import configparser
 from time import sleep
 from video_controller import VideoPlayer 
 from secret_sanitizer import sanitize_url
+from debug_tool import debug
 import requests
 import traceback
 
-# Hardcode debug state for verbose logging
-debug_bool = True
-
-def debug(log_str):
-    if debug_bool: print("[DEBUG]: " + log_str) 
 
 class TwitterAPI:
 
