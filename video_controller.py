@@ -68,9 +68,7 @@ class VideoPlayer:
             duration = self.player.get_time()
             if length - duration <= 10000:
                 return True
-            else: 
-                return False
-        return True
+        return False
 
     def play_next_if_ready(self):
         debug("Triggered play next")
