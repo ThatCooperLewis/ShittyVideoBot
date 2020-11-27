@@ -79,6 +79,7 @@ class VideoPlayer:
                 debug("Video almost over, waiting 5 secs to stop it...")
                 sleep(5)
                 self.player.stop()
+                pyautogui.move(1024, 0)
             return
         if self.is_playing():
             debug("Video isn't over. Skipping play_next") 
