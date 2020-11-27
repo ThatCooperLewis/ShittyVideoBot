@@ -107,8 +107,7 @@ def main():
                     print("Skipping result...")
         try:
             sleep(1)
-            if not video.playlist.is_empty:
-                video.play_next_if_ready()
+            video.play_next_if_ready()
             sleep(12)
             debug("Loop complete")
         except KeyboardInterrupt:
