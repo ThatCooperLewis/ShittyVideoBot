@@ -77,14 +77,8 @@ class VideoPlayer:
                 debug("Video almost over, waiting 5 secs to stop it...")
                 sleep(5)
                 self.player.stop()
-            # Hide taskbar when viewing desktop
-            pyautogui.click(x=100, y=100)
             return
-        if not self.is_playing():
-            debug("Not playing, clicking to hide taskbar")
-            pyautogui.click(x=100, y=100)
-            return
-        if self.player and not self.almost_over():
+        if (self.player and not self.almost_over()) or not self.is_playing():
             debug("Player not setup or video isn't over. Skipping playback of next video (for now)") 
             return
         self.play_url(self.playlist.get_next())
