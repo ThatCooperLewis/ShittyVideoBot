@@ -3,7 +3,7 @@ import configparser
 from time import sleep
 from video_controller import VideoPlayer 
 from secret_sanitizer import sanitize_url
-from debug_tool import debug
+from debug_tool import debug, debug_crash
 import requests
 import traceback
 
@@ -97,11 +97,13 @@ def main():
                                     debug("URL is not valid!")
                             except:
                                 print("Failed to load to queue (or play first video). Skipping video...")
+                                debug_crash()
                                 continue
                         else:
                             debug("URL does not match {}".format(good_url))
                 except:
                     print("Loop iteration failed somewhere.")
+                    debug_crash()
                     print("Skipping result...")
         try:
             sleep(1)
@@ -111,6 +113,7 @@ def main():
         except KeyboardInterrupt:
             return
         except:
+            debug_crash()
             print("Failed to play video, skipping...")
             continue
 
