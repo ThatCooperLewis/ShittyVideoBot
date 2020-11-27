@@ -3,6 +3,7 @@ import vlc
 import pafy
 import pyautogui
 from time import sleep
+from main import debug
 
 class VideoPlaylist:
 
@@ -70,17 +71,22 @@ class VideoPlayer:
         return False
 
     def play_next_if_ready(self):
+        debug("Triggered play next")
         if self.playlist.is_empty:
             if self.almost_over():
+                debug("Video almost over, waiting 5 secs to stop it...")
                 sleep(5)
                 self.player.stop()
             # Hide taskbar when viewing desktop
             pyautogui.click(x=100, y=100)
             return
         if not self.is_playing():
+            debug("Not playing, clicking to hide taskbar")
             pyautogui.click(x=100, y=100)
             return
-        if self.player and not self.almost_over(): return
+        if self.player and not self.almost_over():
+            debug("Player not setup or video isn't over. Skipping playback of next video (for now)") 
+            return
         self.play_url(self.playlist.get_next())
 
     def is_playing(self):

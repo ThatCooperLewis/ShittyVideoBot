@@ -5,15 +5,12 @@ from video_controller import VideoPlayer
 from secret_sanitizer import sanitize_url
 import requests
 import traceback
-'''
-Useful props:
 
-status.id_str : unique ID (track duplicates)
-status.text : raw text of tweet
-status.favorite_count : number of likes (sort by most popular)
-status.user.screen_name : text of username
-'''
+# Hardcode debug state for verbose logging
+debug_bool = True
 
+def debug(log_str):
+    if debug_bool: print("[DEBUG]: " + log_str) 
 
 class TwitterAPI:
 
@@ -67,6 +64,7 @@ def main():
     while True:
         try:
             results = api.get_new_mentions()
+            debug("got results, total count: {}".format(len(results)))
         except:
             if not retry:
                 print("Api request error. Waiting 30s to request again..")
@@ -79,6 +77,7 @@ def main():
                 print("If this keeps happening, login may be failing.")
         retry = False
         if results:
+            debug("starting results parse..")
             for status in results:
                 try:
                     text = status.text
@@ -86,17 +85,25 @@ def main():
                     print(text)
                     for good_url in ['youtube.com', 'youtu.be', 't.co']:
                         if good_url in text:
+                            debug("URL matches {}".format(good_url))
                             try:
                                 # Clean tweet with secret sauce
                                 url = sanitize_url(text, good_url)
+                                debug("Sanitzied URL: {}".format(url))
                                 # Video must meet certain content criteria
                                 if video.is_valid(url):
                                     video.playlist.add_to_queue(url)
+                                    debug("Added to queue")
                                     if not video.is_playing():
+                                        debug("No video playing, starting now...")
                                         video.play_next_if_ready()
+                                else:
+                                    debug("URL is not valid!")
                             except:
                                 print("Failed to load to queue (or play first video). Skipping video...")
                                 continue
+                        else:
+                            debug("URL does not match {}".format(good_url))
                 except:
                     print("Loop iteration failed somewhere.")
                     print("Skipping result...")
@@ -104,6 +111,7 @@ def main():
             sleep(1)
             video.play_next_if_ready()
             sleep(12)
+            debug("Loop complete")
         except KeyboardInterrupt:
             return
         except:
