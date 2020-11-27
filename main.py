@@ -108,7 +108,7 @@ def main():
         try:
             sleep(1)
             video.play_next_if_ready()
-            sleep(12)
+            sleep(20)
             debug("Loop complete")
         except KeyboardInterrupt:
             return
